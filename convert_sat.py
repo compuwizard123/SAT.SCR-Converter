@@ -27,7 +27,7 @@
 
 """SAT.SCR fixed length to CSV conversion utility
 
-Usage: sat-convert.py [options] 
+Usage: convert_sat.py [options] 
 
 Options:
 	-h
@@ -41,10 +41,6 @@ Options:
 	-o
 	--output
 		Pathname to the output directory
-
-	-v
-	--verbose
-		Display raw data
 
 """
 
@@ -73,13 +69,12 @@ def convert_date (str_date):
 
 def main():
     # Defaults
-    convert_date_bool = False
     str_opt_input = "SAT.SCR"
     str_opt_output = "SAT.csv"
     
     # Get arguments, if any
     try:
-        list_opts, list_args = getopt.getopt(sys.argv[1:], 'io:hv', ['input=', 'output=', 'help', 'verbose'])
+        list_opts, list_args = getopt.getopt(sys.argv[1:], 'io:hv', ['input=', 'output=', 'help'])
     except getopt.error, str_error:
         usage(1, str_error)
         
@@ -89,8 +84,6 @@ def main():
             str_opt_input = str_arg
         elif str_opt in ('-o', '--output'):
             str_opt_output = str_arg
-        elif str_opt in ('-v', '--verbose'):
-            bool_verbose = True
         elif str_opt in ('-h', '--help'):
             usage(0)
                 
@@ -145,8 +138,6 @@ def main():
         for category in category_list:
             str_student = str_student + ", " + category
 
-        #print(str_student)
-        #student_list.append(str_student)
         writer.writerow(category_list)
 
 
