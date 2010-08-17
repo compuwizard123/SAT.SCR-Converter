@@ -50,6 +50,8 @@ import csv
 import string
 import sys
 
+# Global Defaults
+bool_convert_date = False
 
 def read_input (str_opt_input):
     obj_input_filehandle = open(str_opt_input, 'r')
@@ -58,13 +60,14 @@ def read_input (str_opt_input):
     return list_input
 
 def convert_date (str_date):
-    length = len(str_date)
-    new_date = str_date[0:2] + "/" + str_date[2:4]
-    if length == 4:
-        return new_date
-    elif length == 6:
-        new_date = new_date + "/" + str_date[4:6]
-        return new_date
+    if bool_convert_date:
+        length = len(str_date)
+        new_date = str_date[0:2] + "/" + str_date[2:4]
+        if length == 4:
+            return new_date
+        elif length == 6:
+            new_date = new_date + "/" + str_date[4:6]
+            return new_date
     return str_date
 
 def main():
@@ -74,7 +77,7 @@ def main():
     
     # Get arguments, if any
     try:
-        list_opts, list_args = getopt.getopt(sys.argv[1:], 'io:hv', ['input=', 'output=', 'help'])
+        list_opts, list_args = getopt.getopt(sys.argv[1:], 'io:hv', ['input=', 'output=', 'convert-dates', 'help'])
     except getopt.error, str_error:
         usage(1, str_error)
         
@@ -84,6 +87,9 @@ def main():
             str_opt_input = str_arg
         elif str_opt in ('-o', '--output'):
             str_opt_output = str_arg
+        elif str_opt in ('--convert-dates'):
+            global bool_convert_date
+            bool_convert_date = True
         elif str_opt in ('-h', '--help'):
             usage(0)
                 
