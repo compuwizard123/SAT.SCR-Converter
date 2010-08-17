@@ -59,11 +59,21 @@ def read_input (str_opt_input):
     obj_input_filehandle = open(str_opt_input, 'r')
     list_input = obj_input_filehandle.read().splitlines()
     obj_input_filehandle.close()
-
     return list_input
+
+def convert_date (str_date):
+    length = len(str_date)
+    new_date = str_date[0:2] + "/" + str_date[2:4]
+    if length == 4:
+        return new_date
+    elif length == 6:
+        new_date = new_date + "/" + str_date[4:6]
+        return new_date
+    return str_date
 
 def main():
     # Defaults
+    convert_date_bool = False
     str_opt_input = "SAT.SCR"
     str_opt_output = "SAT.csv"
     
@@ -105,7 +115,7 @@ def main():
         first_name = string.rstrip(line[21:33])
         middle_initial = string.rstrip(line[33:34])
         sex = string.rstrip(line[34:35])
-        dob = string.rstrip(line[35:37]) + "/" + string.rstrip(line[37:39]) + "/" + string.rstrip(line[39:41])
+        dob = convert_date(string.rstrip(line[35:41]))
         ssn = string.rstrip(line[41:50])
         street_address = string.rstrip(line[50:75])
         city = string.rstrip(line[75:90])
@@ -113,15 +123,15 @@ def main():
         zip_code = string.rstrip(line[94:103])
         residence_code = string.rstrip(line[106:111])
         telephone = string.rstrip(line[116:126])
-        hs_grad_date = string.rstrip(line[126:130])
-        sat_test_date = string.rstrip(line[139:143])
+        hs_grad_date = convert_date(string.rstrip(line[126:130]))
+        sat_test_date = convert_date(string.rstrip(line[139:143]))
         sat_educational_lvl = string.rstrip(line[143:144])
         critical_reading_score = string.rstrip(line[146:149])
         math_score = string.rstrip(line[149:152])
         writing_score = string.rstrip(line[152:155])
         essay_subscore = string.rstrip(line[155:157])
         multiple_choice_subscore = string.rstrip(line[157:159])
-        sat_subject_test_date = string.rstrip(line[259:263])
+        sat_subject_test_date = convert_date(string.rstrip(line[259:263]))
         sat_subject_educational_lvl = string.rstrip(line[263:264])
         subject_test_1_code = string.rstrip(line[266:268])
         subject_test_1_score = string.rstrip(line[268:271])
